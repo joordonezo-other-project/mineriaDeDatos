@@ -1,6 +1,11 @@
+import os
 import math
 import random
-ruta = "C:\\Users\\alejo\\Desktop\\iris.csv"
+
+relative_path = 'data/IRIS.csv'
+absolute_path = os.path.dirname(__file__)
+ruta = os.path.join(absolute_path, relative_path)
+
 
 #funcion para leer el archivo y dividir los datos en entrenamiento y prueba
 def leer_archivo(ruta):
@@ -11,7 +16,7 @@ def leer_archivo(ruta):
     for linea in lineas:
         datos.append(linea.strip().split(","))
     datos.pop(0)
-
+    print(datos)
     #randomizar los datos
     random.shuffle(datos)
     
@@ -25,7 +30,7 @@ def leer_archivo(ruta):
 def predecir(nuevo_dato,datos_entrenamiento, k):
     distancias = []
     for dato in datos_entrenamiento:
-        distancias.append([distancia_euclidiana(nuevo_dato, dato[1:-1]), dato[-1]])
+        distancias.append([distancia_euclidiana(nuevo_dato, dato[:-1]), dato[-1]])
     distancias.sort()
     clases = {}
     for i in range(k):
