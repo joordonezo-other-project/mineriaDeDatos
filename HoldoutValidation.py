@@ -97,15 +97,5 @@ def metodo_holdout(datos_entrenamiento, datos_prueba, k):
             correctos += 1
     print("El modelo tuvo un porcentaje de acierto de: ", correctos/len(datos_prueba)*100, "%")
 
-#funcion principal
-def main():
-    datos_entrenamiento, datos_prueba = leer_archivo(ruta)
-    k =10
-    #metodo_k_fold(datos_entrenamiento, k)
-    metodo_holdout(datos_entrenamiento, datos_prueba, k)
-    nuevo_dato = pedir_datos()
-    print("El nuevo dato pertenece a la clase: ", predecir(nuevo_dato, datos_entrenamiento, k))
 
-if __name__ == "__main__":
-    main()
 

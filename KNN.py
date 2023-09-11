@@ -1,9 +1,5 @@
-import os
+from Data import full_path
 import math
-relative_path = 'data/IRIS.csv'
-absolute_path = os.path.dirname(__file__)
-full_path = os.path.join(absolute_path, relative_path)
-
 
 def splitByComma(item):
     return item.split(',')
