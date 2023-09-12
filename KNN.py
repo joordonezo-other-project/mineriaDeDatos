@@ -41,9 +41,4 @@ headers = dataLines.pop(0)
 dataWithoutLastColumn = [fila[:-1] for fila in dataLines]
 dataWithoutLastColumn = [fila for fila in dataWithoutLastColumn if fila]
 etiquetas_entrenamiento = [fila[-1] for fila in dataLines if fila[-1]]
-nuevo_registros_a_clasificar = [6, 2.2, 4, 1]
-k = 2
 
-etiqueta_predicha = knn_clasificacion(
-    dataWithoutLastColumn, etiquetas_entrenamiento, nuevo_registros_a_clasificar, k)
-print(f'La etiqueta predicha para el nuevo punto es: {etiqueta_predicha}')
