@@ -1,6 +1,6 @@
 from KNN import knn_clasificacion 
 
-def metodo_k_fold(datos, k):
+def metodo_k_fold(datos, k, k_vecinos):
     #dividir los datos en k grupos
     grupos = []
     currency = []
@@ -18,7 +18,7 @@ def metodo_k_fold(datos, k):
         #evaluar el modelo con los datos de prueba
         correctos = 0
         for dato in datos_prueba:
-            if dato[-1] == knn_clasificacion(dato[:-1], datos_entrenamiento, k):
+            if dato[-1] == knn_clasificacion(dato[:-1], datos_entrenamiento, k_vecinos):
                 correctos += 1
         currency.append(correctos/len(datos_prueba)*100)
     print("CROSS VALIDATION - El modelo tuvo un porcentaje de acierto de: ", sum(currency)/len(currency), "%")
