@@ -1,33 +1,7 @@
-from Data import full_path
-import math
+from Data import full_path, distancia_euclidiana
 
 def splitByComma(item):
     return item.split(',')
-
-
-def distancia_euclidiana(punto1, punto2):
-    suma_cuadrados = sum((float(x) - float(y)) ** 2 for x,
-                         y in zip(punto1, punto2))
-    return math.sqrt(suma_cuadrados)
-
-
-def knn_clasificacion(conjunto_entrenamiento, etiquetas_entrenamiento, nuevo_punto, k):
-    distancias = []
-
-    for i, punto in enumerate(conjunto_entrenamiento):
-        distancia = distancia_euclidiana(punto, nuevo_punto)
-        distancias.append((distancia, etiquetas_entrenamiento[i]))
-
-    distancias.sort()
-    k_vecinos = distancias[:k]
-
-    contador = {}
-    for _, etiqueta in k_vecinos:
-        contador[etiqueta] = contador.get(etiqueta, 0) + 1
-
-    etiqueta_predicha = max(contador, key=contador.get)
-    return etiqueta_predicha
-
 
 data = open(full_path, mode='r')
 data = data.read()
@@ -35,10 +9,32 @@ dataLines = data.split('\n')
 dataLines = map(splitByComma, dataLines)
 dataLines = list(dataLines)
 headers = dataLines.pop(0)
-# print("cabeceras " + str(headers)+"\n")
-# print(dataLines)
+dataLines= [fila for fila in dataLines if len(fila)>1]
 
-dataWithoutLastColumn = [fila[:-1] for fila in dataLines]
-dataWithoutLastColumn = [fila for fila in dataWithoutLastColumn if fila]
-etiquetas_entrenamiento = [fila[-1] for fila in dataLines if fila[-1]]
+#funcion para predecir la clase de un nuevo dato
+def knn_clasificacion(nuevo_dato,datos, k):
+    distancias = []
+    #calcular la distancia euclidiana entre el nuevo dato y los datos de entrenamiento y guardarlos en una lista
+    for dato in datos:
+        distancias.append([distancia_euclidiana(nuevo_dato, dato[:-1]), dato[-1]])
+    #ordenar la lista de distancias de menor a mayor, para saber cuales son los k vecinos mas cercanos. los que tengan menor distancia son los mas cercanos
+    distancias.sort()
+    clases = {}
+    #calcular la clase del nuevo dato con los k vecinos mas cercanos de la clase
+    for i in range(k):
+        if distancias[i][1] in clases:
+            clases[distancias[i][1]] += 1
+        else:
+            #si la clase no esta en el diccionario, se agrega y se le asigna el valor de 1
+            clases[distancias[i][1]] = 1
+    clase = ""
+    maximo = 0
+    #encontrar la clase con mas vecinos cercanos y retornar el que más se repite
+    for key in clases:
+        if clases[key] > maximo:
+            maximo = clases[key]
+            clase = key
+    return clase
+
+
 
