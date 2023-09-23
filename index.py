@@ -13,7 +13,6 @@ def main():
     k=int(k)
     k_folds = ks.get("k-fold")
     k_folds=int(k_folds)
-
     metodo_k_fold(dataLines, k_folds,k)
     metodo_holdout(datos_entrenamiento, datos_prueba, k)
     matriz_confusion(datos_entrenamiento, datos_prueba, k)

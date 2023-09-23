@@ -1,5 +1,5 @@
 from Data import full_path, distancia_euclidiana
-
+import random
 def splitByComma(item):
     return item.split(',')
 
@@ -10,6 +10,7 @@ dataLines = map(splitByComma, dataLines)
 dataLines = list(dataLines)
 headers = dataLines.pop(0)
 dataLines= [fila for fila in dataLines if len(fila)>1]
+random.shuffle(dataLines)
 
 #funcion para predecir la clase de un nuevo dato
 def knn_clasificacion(nuevo_dato,datos, k):
