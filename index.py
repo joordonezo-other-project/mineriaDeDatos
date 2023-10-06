@@ -3,6 +3,7 @@ from Data import pedir_datos
 from CrossValidation import metodo_k_fold
 from KNN import knn_clasificacion, dataLines
 from MatrizConfusion import matriz_confusion
+from RedNeuronal import predict, execute
 
 
 #funcion principal
@@ -18,5 +19,7 @@ def main():
     matriz_confusion(datos_entrenamiento, datos_prueba, k)
     etiqueta_predicha = knn_clasificacion(nuevo_dato, dataLines, k)
     print(f'La etiqueta con k={k} predicha para el nuevo punto en KNN es: {etiqueta_predicha}')
+    
+
 if __name__ == "__main__":
     main()

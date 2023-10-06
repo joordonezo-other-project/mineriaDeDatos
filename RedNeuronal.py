@@ -3,6 +3,7 @@ import random
 import os
 import numpy as np
 
+
 # Fix random seed for reproducibility
 random.seed(113)
 
@@ -100,13 +101,17 @@ predictions = [predict(x) for x in test_X]
 accuracy = sum(p == int(y) for p, y in zip(predictions, test_y)) / len(test_y) * 100
 print(f'Accuracy: {accuracy:.2f}%')
 
+def pedir_datos():
+    nuevo_dato = []
+    nuevo_dato.append(float(input("Sepal length: ")))
+    nuevo_dato.append(float(input("Sepal width: ")))
+    nuevo_dato.append(float(input("Petal length: ")))
+    nuevo_dato.append(float(input("Petal width: ")))
+    return nuevo_dato
 
-pred=predict([5.7,2.8,4.1,1.3])
-if (pred==0):
-    print("Iris-setosa")
-elif(pred==1):
-    print("Iris-versicolor")
-else:
-    print("Iris-virginica")
+nuevo_dato  = pedir_datos()
+class_mapping = {0: "Iris-Setosa", 1 : "Iris-Versicolor", 2:"Iris-Virginica"}
+etiqueta_predicha = predict(nuevo_dato)
+print(class_mapping[etiqueta_predicha])
 
     
