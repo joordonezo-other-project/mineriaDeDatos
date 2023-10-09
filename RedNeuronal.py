@@ -36,10 +36,10 @@ prueba_y = [data[4] for data in datos_prueba]
 
 # Definir los parámetros de la red neuronal MLP
 tamaño_entrada = 4
-tamaño_oculto = 8
+tamaño_oculto = 4
 tamaño_salida = 3
 tasa_aprendizaje = 0.005
-épocas = 1000
+épocas = 400
 
 # Inicializar pesos y sesgos
 pesos_entrada_oculta = np.random.uniform(-1, 1, (tamaño_entrada, tamaño_oculto))
