@@ -25,8 +25,8 @@ def main():
     entrenarModelo(4, tam_oculto, 3, taza_aprendizaje, epocas, k_folds)
     
     while True:
-        dato_predecir, ks = pedir_datos_conk()
-        prediccion = predecir(dato_predecir, 2)
+        dato_predecir, k = pedir_datos_conk()
+        prediccion = predecir(dato_predecir, k)
         print(
             f'La etiqueta con k_folds={k_folds} predicha para el nuevo punto  es: {prediccion}')
 
