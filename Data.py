@@ -25,8 +25,7 @@ def pedir_datos_conk():
     nuevo_dato.append(float(input("Sepal width: ")))
     nuevo_dato.append(float(input("Petal length: ")))
     nuevo_dato.append(float(input("Petal width: ")))
-    ks = int(input("Ingrese el valor de k: "))
-    return nuevo_dato, ks
+    return nuevo_dato
 # funcion para calcular la distancia euclidiana
 
 

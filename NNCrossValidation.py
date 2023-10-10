@@ -17,7 +17,6 @@ def derivada_sigmoid(x):
 
 
 pedict_mapping = ["Iris-setosa", "Iris-versicolor", "Iris-virginica"]
-dataFoldsFinal = []
 
 
 def entrenarModelo(tamaño_entrada, tamaño_oculto, tamaño_salida, tasa_aprendizaje, épocas, k):
@@ -36,7 +35,7 @@ def entrenarModelo(tamaño_entrada, tamaño_oculto, tamaño_salida, tasa_aprendi
     for row in dataset:
         row[4] = class_mapping[row[4]]
         row[:4] = [float(row[j]) for j in range(len(row))]
-
+    random.shuffle(dataset)
     # Implementar validación cruzada con k-fold
     fold_size = len(dataset) // k
 
@@ -61,7 +60,6 @@ def entrenarModelo(tamaño_entrada, tamaño_oculto, tamaño_salida, tasa_aprendi
         pesos_oculta_salida = np.random.uniform(-1,
                                                 1, (tamaño_oculto, tamaño_salida))
         sesgo_salida = np.zeros(tamaño_salida)
-        dataFoldsFinal.append({})
         # Bucle de entrenamiento
         for época in range(épocas):
             error_total = 0
@@ -104,7 +102,6 @@ def entrenarModelo(tamaño_entrada, tamaño_oculto, tamaño_salida, tasa_aprendi
                 'pesos_oculta_salida': pesos_oculta_salida,
                 'sesgo_salida': sesgo_salida
             }
-            dataFoldsFinal[fold] = finallyWeights
         # Pruebas
 
         def test(X):
@@ -126,15 +123,15 @@ def entrenarModelo(tamaño_entrada, tamaño_oculto, tamaño_salida, tasa_aprendi
     # Calcular la precisión promedio de todos los folds
     precisión_promedio /= k
     print(f'Precisión Promedio: {precisión_promedio:.2f}%')
-
+    return finallyWeights
 # Pruebas
 
 
-def predecir(X, k):
-    entrada_oculta = np.dot(X, dataFoldsFinal[k].get(
-        "pesos_entrada_oculta")) + dataFoldsFinal[k].get("sesgo_oculto")
+def predecir(X, pesos):
+    entrada_oculta = np.dot(X, pesos.get(
+        "pesos_entrada_oculta")) + pesos.get("sesgo_oculto")
     salida_oculta = sigmoid(entrada_oculta)
-    entrada_salida = np.dot(salida_oculta, dataFoldsFinal[k].get(
-        "pesos_oculta_salida")) + dataFoldsFinal[k].get("sesgo_salida")
+    entrada_salida = np.dot(salida_oculta, pesos.get(
+        "pesos_oculta_salida")) + pesos.get("sesgo_salida")
     salida = sigmoid(entrada_salida)
     return pedict_mapping[np.argmax(salida)]
